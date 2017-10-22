@@ -1,4 +1,4 @@
-import CVSWorker
+import CSVWorker
 
 import WordsCounter
 
@@ -10,7 +10,7 @@ def callback_function(first_counter, second_counter):
     first_counter + second_counter
 
 
-file_to_read = 'input.txt'
+file_to_read = 'input2.txt'
 input_file = open(file_to_read, 'r')
 buffer_list = input_file.readlines(LINE_TO_READ)
 buffer_tmp = ''
@@ -29,6 +29,6 @@ while buffer_list:
     second.calculate(callback_function, [first, second])
     buffer_list = input_file.readlines(LINE_TO_READ)
 
-CVSWorker.dict_to_cvs(first.get_result())
+CSVWorker.dict_to_csv(first.get_result())
 input_file.close()
 print 'Done!'

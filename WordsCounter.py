@@ -1,5 +1,14 @@
 class WordsCounter:
+    """
+    This Class counts repetition of words in given text buffer.
+    not reusable.
+    """
     def __init__(self, buffer_to_count='', dict_to_start_with={}):
+        """
+        constructor
+        :param buffer_to_count: text to count words from (Optional)
+        :param dict_to_start_with: dict object to merge results with (Optional)
+        """
         self._words_dict = dict_to_start_with
         self._buffer = buffer_to_count
         self._started = False
@@ -8,6 +17,12 @@ class WordsCounter:
         self._callback_args = []
 
     def calculate(self, callback=None, callback_args=[]):
+        """
+        count function.
+        :param callback: callable to call when done. (Optional)
+        :param callback_args: args to input to callable. (Optional)
+        :return: None
+        """
         # type: (callable(list), list) -> None
         if not self._callback:
             self._callback = callback
