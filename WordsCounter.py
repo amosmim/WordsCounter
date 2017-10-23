@@ -66,6 +66,10 @@ class WordsCounter:
         return self
 
     def get_result(self):
+        """
+        getter for dict with the words count.
+        :return: dict
+        """
         # type: () -> dict
 
         while not self._done:

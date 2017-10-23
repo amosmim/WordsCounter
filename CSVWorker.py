@@ -1,5 +1,12 @@
 
 def dict_to_csv(dict_obj, first_line=None, output_file_name='output.csv'):
+    """
+    write down a dict object to csv file.
+    :param dict_obj: dict object.
+    :param first_line: optional. list with first line in the table, before dict data - for naming the columns.
+    :param output_file_name: optional. path to csv file. Default is 'output.csv' in home directory.
+    :return: None
+    """
     cvs_file = open(output_file_name, 'w')
     cvs_format = '{},{}\n'
     if first_line:
@@ -9,8 +16,15 @@ def dict_to_csv(dict_obj, first_line=None, output_file_name='output.csv'):
     cvs_file.close()
 
 
-def csv_to_dict(file_name, delete_first_coulm_flag = False):
+def csv_to_dict(file_name, delete_first_column_flag=False):
     # type: (str) -> dict
+    """
+    transfer csv withe two columns to dict object.
+    :param file_name: path to csv file
+    :param delete_first_column_flag: boolean flag. if True - the function will be ignored from the first line.
+                                    Default is False
+    :return: dict object
+    """
 
     cvs_file = open(file_name, 'r')
     tmp_dict = {}
@@ -27,23 +41,27 @@ def csv_to_dict(file_name, delete_first_coulm_flag = False):
                 tmp_dict[pair[0]] = tmp_b
         line = cvs_file.readline()
     cvs_file.close()
-    if delete_first_coulm_flag:
+    if delete_first_column_flag:
         del tmp_dict[tmp_dict.keys()[0]]
     return tmp_dict
 
 
-def lib_test():
+def _lib_test():
+    """
+    tester for dict_to_csv() & csv_to_dict
+    :return: None
+    """
     test_file_name = 'output2.csv'
     tmp_dict = {'Amos': 99, 'Chen': 70, 'Koko': 50, 'Maayan': 100, 'Adi': 88}
     dict_to_csv(tmp_dict, ['name', 'Grade'], test_file_name)
     result = csv_to_dict(test_file_name, True)
     print "Length : %d" % len(tmp_dict)
     if len(result) != len(tmp_dict):
-        print 'ERROR in lib_test : different length! %d , %d' % len(result) , len(tmp_dict)
+        print 'ERROR in _lib_test : different length! %d , %d' % len(result) , len(tmp_dict)
         return
     for key in result.keys():
         if key not in tmp_dict or tmp_dict[key] != result[key]:
-            print 'ERROR in lib_test : in key %s!' % key
+            print 'ERROR in _lib_test : in key %s!' % key
             return
-    print 'lib_test Succeeded!'
+    print '_lib_test Succeeded!'
 
