@@ -29,8 +29,6 @@ class WordsCounter:
         """
         # type: (callable(list), list) -> None
 
-        #debug TODO -delete this:
-        print ("start to calculate text start with |" + self._buffer + "|\n")
         self._lock.acquire()
         if not self._callback:
             self._callback = callback
@@ -55,8 +53,6 @@ class WordsCounter:
                     self._words_dict[fix_word] += 1
             self._done = True
 
-            # debug TODO -delete this:
-            print ("\nend to calculate text start with " + self._buffer[0:10] + "\n")
             self._lock.release()
             if self._callback:
                 if self._callback_args:
@@ -80,7 +76,7 @@ class WordsCounter:
                 self.calculate()
             if not other._started:
                 other.calculate()
-        print "\nstart merge result with start with" + self._buffer[0:10] + " and start with:" + other._buffer[0:10] + "\n"
+
         self._lock.acquire()
         other._lock.acquire()
         for key in other._words_dict.keys():
@@ -89,7 +85,7 @@ class WordsCounter:
                 self._words_dict[key] = self._words_dict[key] + other._words_dict[key]
             else:
                 self._words_dict[key] = other._words_dict[key]
-        print "\nend merge result with start with" + self._buffer[0:10]+ " and start with:" + other._buffer[0:10] + "\n"
+
         other._lock.release()
         self._lock.release()
         return self
@@ -102,8 +98,8 @@ class WordsCounter:
         # type: () -> dict
 
         while not self._done:
-            print '.'
-        print "giving results back\n"
+            pass
+
         self._lock.acquire()
         copy = self._words_dict
         self._lock.release()
