@@ -1,34 +1,31 @@
 import CSVWorker
-
+import thread
 import WordsCounter
 
-LINE_TO_READ = 5
+LINE_TO_READ = 3
 
 
 def callback_function(first_counter, second_counter):
     # type: (WordsCounter,  WordsCounter) -> WordsCounter
+    print "start callback"
     first_counter + second_counter
+    print "end callback"
+
+
 
 
 file_to_read = 'input2.txt'
 input_file = open(file_to_read, 'r')
-buffer_list = input_file.readlines(LINE_TO_READ)
-buffer_tmp = ''
-for string in buffer_list:
-    buffer_tmp += string + '\n'
+first = WordsCounter.WordsCounter()
+i = 0
+for line in input_file:
+    print ("send " + str(i) + " buffer: |" +line + "|\n")
+    i += 1
+    second = WordsCounter.WordsCounter(line)
+    thread.start_new_thread(second.calculate, (callback_function, [first, second]))
 
-first = WordsCounter.WordsCounter(buffer_tmp)
-first.calculate()
-
-buffer_list = input_file.readlines(LINE_TO_READ)
-while buffer_list:
-    buffer_tmp = ''
-    for string in buffer_list:
-        buffer_tmp += string + '\n'
-    second = WordsCounter.WordsCounter(buffer_tmp)
-    second.calculate(callback_function, [first, second])
-    buffer_list = input_file.readlines(LINE_TO_READ)
-
+print "after sending loop"
+print first.get_result()
 CSVWorker.dict_to_csv(first.get_result())
 input_file.close()
 print 'Done!'
